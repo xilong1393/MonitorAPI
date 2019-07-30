@@ -185,6 +185,7 @@
     <Compile Include="Service\ClassroomService.cs" />
     <Compile Include="Service\LogService.cs" />
     <Compile Include="Service\UserService.cs" />
+    <Compile Include="Util\ServiceFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

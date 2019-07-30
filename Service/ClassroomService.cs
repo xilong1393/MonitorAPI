@@ -6,8 +6,28 @@ using System.Collections.Generic;
 
 namespace MonitorAPI.Service
 {
-    class ClassroomService
+    public sealed class ClassroomService
     {
+        ClassroomService() { }
+        private static readonly object padlock = new object();
+        private static ClassroomService instance = null;
+        public static ClassroomService Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new ClassroomService();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
         public void AbortCourse(string sessionID, int classID)
         {
             throw new NotImplementedException();

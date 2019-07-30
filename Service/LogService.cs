@@ -5,8 +5,28 @@ using System.Transactions;
 
 namespace MonitorAPI.Service
 {
-    public class LogService
+    public sealed class LogService
     {
+        LogService() { }
+        private static readonly object padlock = new object();
+        private static LogService instance = null;
+        public static LogService Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (padlock)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new LogService();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
         public bool LogUserLogin(UserLoginLog userLoginLog)
         {
             using (PersistenceContext pc = new PersistenceContext(IsolationLevel.ReadCommitted)) {

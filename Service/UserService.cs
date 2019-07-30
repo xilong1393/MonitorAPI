@@ -5,8 +5,24 @@ using System;
 
 namespace MonitorAPI.Service
 {
-    public class UserService
+    public sealed class UserService
     {
+        UserService() { }
+        private static readonly object padlock = new object();
+        private static UserService instance = null;
+        public static UserService Instance {
+            get {
+                if (instance == null) {
+                    lock (padlock) {
+                        if (instance == null)
+                        {
+                            instance = new UserService();
+                        }
+                    }
+                }
+                return instance;
+            }
+        }
         public void LogUserLogin(string sessionID, string employerID, DateTime loginTime, string loginID)
         {
             throw new NotImplementedException();
