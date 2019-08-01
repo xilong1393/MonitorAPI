@@ -16,7 +16,7 @@ namespace MonitorAPI.Controllers
 
         [HttpPost]
         public IHttpActionResult GetUserLogin(UserLoginForm userLoginForm) {
-            UserService service = UserService.Instance;
+            UserService service = ServiceFactory.UserService;
             User user = service.UserLogin(userLoginForm.UserName, userLoginForm.Password);
             if (user == null)
             {

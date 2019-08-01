@@ -8,26 +8,6 @@ namespace MonitorAPI.Service
 {
     public sealed class ClassroomGroupService
     {
-        ClassroomGroupService() { }
-        private static readonly object padlock = new object();
-        private static ClassroomGroupService instance = null;
-        public static ClassroomGroupService Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (padlock)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new ClassroomGroupService();
-                        }
-                    }
-                }
-                return instance;
-            }
-        }
         public void CheckSchedule(string sessionID, int classGroupID)
         {
             throw new NotImplementedException();

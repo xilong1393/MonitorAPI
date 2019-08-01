@@ -184,6 +184,7 @@
     <Compile Include="Service\ClassroomGroupService.cs" />
     <Compile Include="Service\ClassroomService.cs" />
     <Compile Include="Service\LogService.cs" />
+    <Compile Include="Service\ServiceFactory.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

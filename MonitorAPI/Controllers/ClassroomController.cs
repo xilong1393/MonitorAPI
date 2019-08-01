@@ -10,13 +10,13 @@ namespace MonitorAPI.Controllers
     {
         public List<ClassroomGroup> GetClassroomGroupList()
         {
-            ClassroomGroupService service = ClassroomGroupService.Instance;
+            ClassroomGroupService service = ServiceFactory.ClassroomGroupService;
             List<ClassroomGroup> list = service.GetClassroomGroups(" ");
             return list;
         }
         [HttpPost]
         public List<ClassroomView> GetClassroomListByGroupID(GetClassroomListForm getClassroomListForm) {
-            ClassroomService service = ClassroomService.Instance;
+            ClassroomService service = ServiceFactory.ClassroomService;
             List<ClassroomView> list = service.GetClassroomListByGroupID(getClassroomListForm.SessionID, getClassroomListForm.GroupID);
             return list;
         }
