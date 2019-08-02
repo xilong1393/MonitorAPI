@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace MonitorAPI.Dao
 {
-    class UserDao:BaseDao
+    public class UserDao:BaseDao
     {
         private const string QUERY_BY_NameAndPwd_SQL = "SELECT * FROM [User] WHERE UserName=@Name and Password=@Password";
 

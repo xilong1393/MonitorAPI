@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace MonitorAPI.Dao
 {
-    class ClassroomGroupDao:BaseDao
+    public class ClassroomGroupDao:BaseDao
     {
         private const string QUERY_ALL_CLASSROOMGROUP_SQL = "SELECT * FROM CLASSROOMGROUP";
         public ClassroomGroupDao(PersistenceContext pc) : base(pc) { }

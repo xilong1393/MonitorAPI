@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MonitorAPI.Dao
 {
-    class LogDao:BaseDao
+    public class LogDao:BaseDao
     {
         private const string Insert_UserLogin_SQL = "INSERT INTO UserLoginLog values (@SessionID, @EmployeeID, @LoginTime, @LoginIP)";
         private const string Insert_UserOperation_SQL = "INSERT INTO UserOperationLog values (@SessionID, @Operation, @OperationTime)";

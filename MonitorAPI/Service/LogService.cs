@@ -10,7 +10,7 @@ namespace MonitorAPI.Service
         public bool LogUserLogin(UserLoginLog userLoginLog)
         {
             using (PersistenceContext pc = new PersistenceContext(IsolationLevel.ReadCommitted)) {
-                LogDao dao = new LogDao(pc);
+                LogDao dao = DaoFactory.LogDao(pc);
                 bool result = dao.InsertUserLogin(userLoginLog);
                 if (result) pc.Commit();
                 return result;
@@ -21,7 +21,7 @@ namespace MonitorAPI.Service
         {
             using (PersistenceContext pc = new PersistenceContext(IsolationLevel.ReadCommitted))
             {
-                LogDao dao = new LogDao(pc);
+                LogDao dao = DaoFactory.LogDao(pc);
                 bool result = dao.InsertUserOperation(userOperationLog);
                 if (result) pc.Commit();
                 return result;

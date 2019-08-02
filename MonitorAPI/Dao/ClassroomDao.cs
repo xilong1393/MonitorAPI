@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace MonitorAPI.Dao
 {
-    class ClassroomDao:BaseDao
+    public class ClassroomDao:BaseDao
     {
         //private const string QUERY_CLASSROOMBYGROUPID_SQL = "SELECT * FROM CLASSROOM WHERE CLASSROOMGROUPID=@GROUPID";
         private const string QUERY_CLASSROOMBYID_SQL = "SELECT * FROM CLASSROOM WHERE ClassroomID=@ClassroomID";

@@ -17,7 +17,7 @@ namespace MonitorAPI.Service
         {
             using (PersistenceContext pc = new PersistenceContext())
             {
-                ClassroomGroupDao classroomGroupDao = new ClassroomGroupDao(pc);
+                ClassroomGroupDao classroomGroupDao = DaoFactory.ClassroomGroupDao(pc);
                 List<ClassroomGroup> list = classroomGroupDao.GetClassroomGroups();
                 return list;
             }

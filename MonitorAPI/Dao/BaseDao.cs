@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace MonitorAPI.Dao
 {
-    class BaseDao
+    public class BaseDao
     {
         private PersistenceContext persistenceContext;
 

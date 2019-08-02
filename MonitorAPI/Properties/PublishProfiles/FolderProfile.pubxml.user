@@ -85,10 +85,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2012 12:48:56</publishTime>
     </File>
     <File Include="bin/MonitorAPI.dll">
-      <publishTime>08/01/2019 18:45:57</publishTime>
+      <publishTime>08/02/2019 11:04:24</publishTime>
     </File>
     <File Include="bin/MonitorAPI.pdb">
-      <publishTime>08/01/2019 18:45:57</publishTime>
+      <publishTime>08/02/2019 11:04:24</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/18/2018 09:44:54</publishTime>
@@ -355,7 +355,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/30/2019 10:08:19</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/30/2019 17:01:04</publishTime>
+      <publishTime>08/02/2019 11:06:27</publishTime>
     </File>
   </ItemGroup>
 </Project>

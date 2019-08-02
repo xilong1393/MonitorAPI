@@ -162,6 +162,7 @@
     <Compile Include="Dao\BaseDao.cs" />
     <Compile Include="Dao\ClassroomDao.cs" />
     <Compile Include="Dao\ClassroomGroupDao.cs" />
+    <Compile Include="Dao\DaoFactory.cs" />
     <Compile Include="Dao\framework\PersistenceContext.cs" />
     <Compile Include="Dao\framework\SqlHelper.cs" />
     <Compile Include="Dao\LogDao.cs" />
