@@ -1,6 +1,8 @@
 ﻿using MonitorAPI.Model;
 using MonitorAPI.Models;
 using MonitorAPI.Service;
+using MonitorAPI.Util;
+using System;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -16,13 +18,21 @@ namespace MonitorAPI.Controllers
 
         [HttpPost]
         public IHttpActionResult GetUserLogin(UserLoginForm userLoginForm) {
-            UserService service = ServiceFactory.UserService;
-            User user = service.UserLogin(userLoginForm.UserName, userLoginForm.Password);
-            if (user == null)
+            try
             {
-                return NotFound();
+                UserService service = ServiceFactory.UserService;
+                User user = service.UserLogin(userLoginForm.UserName, userLoginForm.Password);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                return Ok(user);
             }
-            return Ok(user);
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                throw;
+            }
         }
     }
 }
