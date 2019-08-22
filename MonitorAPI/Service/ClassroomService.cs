@@ -17,8 +17,8 @@ namespace MonitorAPI.Service
         {
             using (PersistenceContext pc = new PersistenceContext())
             {
-                ClassroomDao classroomDao = DaoFactory.ClassroomDao(pc);
-                ClassroomInfo classroomInfo = classroomDao.GetClassroomID(classID);
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                ClassroomInfo classroomInfo = classroomDao.GetClassroomInfoByID(classID);
                 return classroomInfo;
             }
         }
@@ -27,7 +27,7 @@ namespace MonitorAPI.Service
         {
             using (PersistenceContext pc = new PersistenceContext())
             {
-                ClassroomDao classroomDao = DaoFactory.ClassroomDao(pc);
+                ClassroomDao classroomDao = new ClassroomDao(pc);
                 List<ClassroomView> list = classroomDao.GetClassroomByGroupID(classGroupID);
                 return list;
             }

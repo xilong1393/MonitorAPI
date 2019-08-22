@@ -12,7 +12,7 @@ namespace MonitorAPI.Service
         private static LogService logService;
         private static ClassroomService classroomService;
         private static ClassroomGroupService classroomGroupService;
-
+        private static OperationService operationService;
         public static UserService UserService
         {
             get
@@ -82,6 +82,24 @@ namespace MonitorAPI.Service
                     }
                 }
                 return classroomGroupService;
+            }
+        }
+
+        public static OperationService OperationService
+        {
+            get
+            {
+                if (operationService == null)
+                {
+                    lock (padlock)
+                    {
+                        if (operationService == null)
+                        {
+                            operationService = new OperationService();
+                        }
+                    }
+                }
+                return operationService;
             }
         }
     }

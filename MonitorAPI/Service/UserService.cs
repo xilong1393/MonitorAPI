@@ -21,7 +21,7 @@ namespace MonitorAPI.Service
         {
             using (PersistenceContext pc = new PersistenceContext())
             {
-                UserDao userDao = DaoFactory.UserDao(pc);
+                UserDao userDao = new UserDao(pc);
                 User user = userDao.GetUser(userName, password);
                 return user;
             }

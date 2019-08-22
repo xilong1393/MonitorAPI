@@ -10,33 +10,33 @@ namespace MonitorAPI.Controllers
 {
     public class ClassroomController : ApiController
     {
-        public List<ClassroomGroup> GetClassroomGroupList()
+        public IHttpActionResult GetClassroomGroupList()
         {
             try
             {
                 ClassroomGroupService service = ServiceFactory.ClassroomGroupService;
                 List<ClassroomGroup> list = service.GetClassroomGroups(" ");
-                return list;
+                return Ok(list);
             }
             catch (Exception ex)
             {
                 LogHelper.GetLogger().Error(ex.ToString());
-                throw;
+                return BadRequest(ex.ToString());
             }
             
         }
         [HttpPost]
-        public List<ClassroomView> GetClassroomListByGroupID(GetClassroomListForm getClassroomListForm) {
+        public IHttpActionResult GetClassroomListByGroupID(GetClassroomListForm getClassroomListForm) {
             try
             {
                 ClassroomService service = ServiceFactory.ClassroomService;
                 List<ClassroomView> list = service.GetClassroomListByGroupID(getClassroomListForm.SessionID, getClassroomListForm.GroupID);
-                return list;
+                return Ok(list);
             }
             catch (Exception ex)
             {
                 LogHelper.GetLogger().Error(ex.ToString());
-                throw;
+                return BadRequest(ex.ToString());
             }
             
         }

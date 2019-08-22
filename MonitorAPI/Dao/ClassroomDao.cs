@@ -1,5 +1,6 @@
 ﻿using MonitorAPI.Dao.framework;
 using MonitorAPI.Model;
+using MonitorAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -8,6 +9,8 @@ namespace MonitorAPI.Dao
 {
     public class ClassroomDao:BaseDao
     {
+        public ClassroomDao(PersistenceContext pc) : base(pc) { }
+
         //private const string QUERY_CLASSROOMBYGROUPID_SQL = "SELECT * FROM CLASSROOM WHERE CLASSROOMGROUPID=@GROUPID";
         private const string QUERY_CLASSROOMBYID_SQL = "SELECT * FROM CLASSROOM WHERE ClassroomID=@ClassroomID";
 
@@ -17,7 +20,7 @@ namespace MonitorAPI.Dao
             "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
             "WHERE CLASSROOMGROUPID=@GROUPID";
 
-        internal ClassroomInfo GetClassroomID(int classID)
+        internal ClassroomInfo GetClassroomInfoByID(int classID)
         {
             using (SqlCommand command = new SqlCommand())
             {
@@ -29,7 +32,6 @@ namespace MonitorAPI.Dao
             }
         }
 
-        public ClassroomDao(PersistenceContext pc) : base(pc) { }
         public List<ClassroomView> GetClassroomByGroupID(int GroupID) {
             using (SqlCommand command = new SqlCommand())
             {
@@ -38,6 +40,18 @@ namespace MonitorAPI.Dao
                 command.Parameters.AddWithValue("@GROUPID", GroupID);
                 List<ClassroomView> list = SqlHelper.ExecuteReaderCmdList<ClassroomView>(command);
                 return list;
+            }
+        }
+
+        public Classroom GetClassroomByID(int classID)
+        {
+            using (SqlCommand command = new SqlCommand())
+            {
+                command.Connection = Connection;
+                command.CommandText = QUERY_CLASSROOMBYID_SQL;
+                command.Parameters.AddWithValue("@ClassroomID", classID);
+                Classroom classroom = SqlHelper.ExecuteReaderCmdObject<Classroom>(command);
+                return classroom;
             }
         }
     }

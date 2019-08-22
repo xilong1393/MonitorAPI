@@ -5,7 +5,7 @@ namespace MonitorAPI.Dao
 {
     public class BaseDao
     {
-        private PersistenceContext persistenceContext;
+        public PersistenceContext persistenceContext;
 
         protected SqlConnection Connection
         {

@@ -31,7 +31,7 @@ namespace MonitorAPI.Controllers
             catch (Exception ex)
             {
                 LogHelper.GetLogger().Error(ex.ToString());
-                throw;
+                return BadRequest(ex.ToString());
             }
         }
     }

@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=1.2.0.246, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.1.2.0\lib\net45\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -161,6 +164,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ClassroomController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OperationController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Dao\BaseDao.cs" />
     <Compile Include="Dao\ClassroomDao.cs" />
@@ -169,6 +173,8 @@
     <Compile Include="Dao\framework\PersistenceContext.cs" />
     <Compile Include="Dao\framework\SqlHelper.cs" />
     <Compile Include="Dao\LogDao.cs" />
+    <Compile Include="Dao\OperationDao.cs" />
+    <Compile Include="Dao\RACommandLog.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -179,6 +185,7 @@
     <Compile Include="Models\ClassroomGroup.cs" />
     <Compile Include="Models\ClassroomInfo.cs" />
     <Compile Include="Models\ClassroomView.cs" />
+    <Compile Include="Models\OperationModel\ClassRecordingWithSchedule.cs" />
     <Compile Include="Models\ParameterForm\GetClassroomListForm.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ParameterForm\UserLoginForm.cs" />
@@ -187,7 +194,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\ClassroomGroupService.cs" />
     <Compile Include="Service\ClassroomService.cs" />
+    <Compile Include="Service\FUNC\FWebConfig.cs" />
     <Compile Include="Service\LogService.cs" />
+    <Compile Include="Service\OperationService.cs" />
+    <Compile Include="Service\Operations\AbortRecord.cs" />
+    <Compile Include="Service\Operations\CommandProcessor.cs" />
+    <Compile Include="Service\Operations\CommandSetting.cs" />
+    <Compile Include="Service\Operations\PushSchedule.cs" />
+    <Compile Include="Service\Operations\StopRecord.cs" />
+    <Compile Include="Service\Operations\XMLCommandFactory.cs" />
     <Compile Include="Service\ServiceFactory.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Util\LogHelper.cs" />
@@ -248,6 +263,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Operation\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
