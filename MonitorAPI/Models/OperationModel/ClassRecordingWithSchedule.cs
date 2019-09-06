@@ -13,6 +13,10 @@ namespace MonitorAPI.Models.OperationModel
         public int FileServerID { get; set; }
         public int ClassTypeID { get; set; }
         public int ClassroomID { get; set; }
+        public int ClassID { get; set; }
+        public string ClassDataDir { get; set; }
+        public string FileServerName { get; set; }
+        public DateTime classstarttime { get; set; }
         public string InstructorName { get; set; }
         public int QuarterID { get; set; }
         public bool IsPostDelay { get; set; }

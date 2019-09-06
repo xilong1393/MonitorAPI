@@ -13,7 +13,7 @@ namespace MonitorAPI.Controllers
             try
             {
                 OperationService service = ServiceFactory.OperationService;
-                CommandParameter parameter = service.PushSchedule(classroomID, sessionID);
+                CommandParameter parameter = service.PushSchedule(classroomID);
                 if (parameter.succ)
                     return Ok(parameter);
                 else

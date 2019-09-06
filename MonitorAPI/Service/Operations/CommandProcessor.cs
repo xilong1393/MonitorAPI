@@ -1,6 +1,7 @@
 ﻿using ICSharpCode.SharpZipLib.Zip.Compression.Streams;
 using System;
 using System.Collections;
+using System.Data;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -63,7 +64,8 @@ namespace MonitorAPI.Service.Operations
             }
             catch (Exception)
             {
-                throw new Exception("failed in waiting for response");
+                //throw new Exception("failed in waiting for response");
+                throw;
             }
         }
         protected string SendStringReturnCommand(string commandxml)
@@ -88,6 +90,51 @@ namespace MonitorAPI.Service.Operations
             return null;
         }
     }
+
+    public class AbortRecord : SingleCommandProcessor
+    {
+        public AbortRecord(string ip, int port) : base(ip, port)
+        {
+        }
+
+        public override object Execute()
+        {
+            string xml = XMLCommandFactory.AbortCommandXml();
+            SendCommandAndParseResponse(xml);
+            return null;
+        }
+    }
+
+    public class StopRecord : SingleCommandProcessor
+    {
+        public StopRecord(string ip, int port) : base(ip, port)
+        {
+        }
+
+        public override object Execute()
+        {
+            string xml = XMLCommandFactory.StopCommandXml();
+            SendCommandAndParseResponse(xml);
+            return null;
+        }
+    }
+
+    public class PushSchedule : SingleCommandProcessor
+    {
+        private DataTable CourseSchedule;
+        public PushSchedule(string ip, int port, DataTable dtSchedule)
+            : base(ip, port)
+        {
+            CourseSchedule = dtSchedule;
+        }
+        public override Object Execute()
+        {
+            string xml = XMLCommandFactory.PushScheduleXml(CourseSchedule);
+            SendCommandAndParseResponse(xml);
+            return CourseSchedule;
+        }
+    }
+
 
     public class UpdateEngineConfiguration : SingleCommandProcessor
     {

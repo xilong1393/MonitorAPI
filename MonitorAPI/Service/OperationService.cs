@@ -13,7 +13,7 @@ namespace MonitorAPI.Service
     public class OperationService
     {
         //push schedule
-        public CommandParameter PushSchedule(int classroomID, string sessionID = "")
+        public CommandParameter PushSchedule(int classroomID, string sessionID = "Winform_Random_User")
         {
             CommandParameter parameter = GetPPCParameter(classroomID);
             if (!parameter.succ)
@@ -21,7 +21,7 @@ namespace MonitorAPI.Service
                 return parameter;
             }
 
-            using (PersistenceContext pc = new PersistenceContext(System.Transactions.IsolationLevel.ReadCommitted))
+            using (PersistenceContext pc = new PersistenceContext())
             {
                 OperationDao operationDao = new OperationDao(pc);
                 List<ClassRecordingWithSchedule> list = operationDao.GetClassroomRecordingByClassroomID(classroomID);
@@ -33,8 +33,7 @@ namespace MonitorAPI.Service
                 ClassroomDao classroomDao = new ClassroomDao(pc);
                 Classroom classroom = classroomDao.GetClassroomByID(classroomID);
                 LogDao logDao = new LogDao(pc);
-                logDao.InsertCommandLog(sessionID, "Push Schedule", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
-
+                logDao.InsertCommandLog(sessionID, "push schedule", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
                 return parameter;
             }
         }
@@ -253,8 +252,7 @@ namespace MonitorAPI.Service
                 }
                 UpdateAgentConfiguration agentproc = new UpdateAgentConfiguration(agentParam.ip, agentParam.port, agentConfig);
                 ExecuteCommand(agentproc, agentParam);
-                logDao.InsertCommandLog(sessionID, "update configuration - agent",
-                classroom.ClassroomName, agentParam.ip, agentParam.succ ? 'S' : 'F');
+                logDao.InsertCommandLog(sessionID, "update configuration - agent", classroom.ClassroomName, agentParam.ip, agentParam.succ ? 'S' : 'F');
                 if (!agentParam.succ)
                 {
                     return agentParam;
