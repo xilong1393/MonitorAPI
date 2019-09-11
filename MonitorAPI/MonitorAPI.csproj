@@ -185,7 +185,10 @@
     <Compile Include="Models\ClassroomGroup.cs" />
     <Compile Include="Models\ClassroomInfo.cs" />
     <Compile Include="Models\ClassroomView.cs" />
+    <Compile Include="Models\OperationModel\Classrecording.cs" />
     <Compile Include="Models\OperationModel\ClassRecordingWithSchedule.cs" />
+    <Compile Include="Models\OperationModel\ClassroomScheduleView.cs" />
+    <Compile Include="Models\OperationModel\DatePeriod.cs" />
     <Compile Include="Models\ParameterForm\GetClassroomListForm.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ParameterForm\UserLoginForm.cs" />
@@ -200,6 +203,8 @@
     <Compile Include="Service\OperationService.cs" />
     <Compile Include="Service\Operations\CommandProcessor.cs" />
     <Compile Include="Service\Operations\CommandSetting.cs" />
+    <Compile Include="Service\Operations\FConvertToDatatable.cs" />
+    <Compile Include="Service\Operations\SingleCommand.cs" />
     <Compile Include="Service\Operations\XMLCommandFactory.cs" />
     <Compile Include="Service\ServiceFactory.cs" />
     <Compile Include="Service\UserService.cs" />

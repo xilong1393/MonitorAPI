@@ -1,6 +1,8 @@
 ﻿using MonitorAPI.Dao;
 using MonitorAPI.Dao.framework;
 using MonitorAPI.Model;
+using MonitorAPI.Models;
+using MonitorAPI.Models.OperationModel;
 using System;
 using System.Collections.Generic;
 
@@ -33,6 +35,16 @@ namespace MonitorAPI.Service
             }
         }
 
+        public List<ClassroomScheduleView> GetClassroomScheduleByGroupID(string sessionID, int classGroupID)
+        {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                List<ClassroomScheduleView> list = classroomDao.GetClassroomScheduleByGroupID(classGroupID);
+                return list;
+            }
+        }
+
         public void ListLocalData(string sessionID, int classID)
         {
             throw new NotImplementedException();
@@ -41,6 +53,26 @@ namespace MonitorAPI.Service
         public void PushConfig(string sessionID, int classID)
         {
             throw new NotImplementedException();
+        }
+
+        internal Classroom GetClassroomByID(int classroomid)
+        {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                Classroom classroom = classroomDao.GetClassroomByID(classroomid);
+                return classroom;
+            }
+        }
+
+        public ClassroomView GetClassroomDetailByGroupID(string sessionID, int classroomID)
+        {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                ClassroomView classroomView = classroomDao.GetClassroomDetailByID(classroomID);
+                return classroomView;
+            }
         }
 
         public void PushSchedule(string sessionID, int classroomID)

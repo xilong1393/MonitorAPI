@@ -220,5 +220,4 @@ namespace MonitorAPI.Service.Operations
         public string SvrPortalpage;
         public int classroomid;
     }
-
 }

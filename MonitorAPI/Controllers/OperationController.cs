@@ -1,7 +1,11 @@
-﻿using MonitorAPI.Service;
+﻿using MonitorAPI.Model;
+using MonitorAPI.Models;
+using MonitorAPI.Models.OperationModel;
+using MonitorAPI.Service;
 using MonitorAPI.Service.Operations;
 using MonitorAPI.Util;
 using System;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace MonitorAPI.Controllers
@@ -103,7 +107,7 @@ namespace MonitorAPI.Controllers
             try
             {
                 OperationService service = ServiceFactory.OperationService;
-                CommandParameter parameter = service.QuerySchedule(classroomID, sessionID);
+                CommandParameter parameter = service.CheckSchedule(classroomID, sessionID);
                 if (parameter.succ)
                     return Ok(parameter);
                 else
@@ -119,6 +123,44 @@ namespace MonitorAPI.Controllers
             }
         }
 
+        //classroom Info
+        [HttpGet]
+        public IHttpActionResult ClassroomInfo(int classroomID, string sessionID)
+        {
+            try
+            {
+                ClassroomService service = ServiceFactory.ClassroomService;
+                ClassroomView classroom = service.GetClassroomDetailByGroupID(sessionID, classroomID);
+                if (classroom != null)
+                    return Ok(classroom);
+                else
+                {
+                    return BadRequest("classroom doesn't exist");
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
+        //Group schedule
+        [HttpGet]
+        public IHttpActionResult GroupSchedule(int groupID, string sessionID)
+        {
+            try
+            {
+                ClassroomService service = ServiceFactory.ClassroomService;
+                List<ClassroomScheduleView> list = service.GetClassroomScheduleByGroupID(sessionID,groupID);
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
         [HttpGet]
         public IHttpActionResult RebootPPC(int classroomID, string sessionID)
         {

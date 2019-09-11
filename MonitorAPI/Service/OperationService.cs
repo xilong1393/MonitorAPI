@@ -4,6 +4,7 @@ using MonitorAPI.Models;
 using MonitorAPI.Models.OperationModel;
 using MonitorAPI.Service.FUNC;
 using MonitorAPI.Service.Operations;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -35,6 +36,16 @@ namespace MonitorAPI.Service
                 LogDao logDao = new LogDao(pc);
                 logDao.InsertCommandLog(sessionID, "push schedule", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
                 return parameter;
+            }
+        }
+
+        internal DatePeriod GetDatePeriod(int nDays)
+        {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                OperationDao operationDao = new OperationDao(pc);
+                DatePeriod datePeriod = operationDao.GetDatePeriod(nDays);
+                return datePeriod;
             }
         }
 
@@ -228,7 +239,7 @@ namespace MonitorAPI.Service
             {
                 return engineParam;
             }
-            using (PersistenceContext pc = new PersistenceContext(System.Transactions.IsolationLevel.ReadCommitted))
+            using (PersistenceContext pc = new PersistenceContext())
             {
                 OperationDao operationDao = new OperationDao(pc);
                 int result = operationDao.UpdateClassRecording(classroomID, 'D');
@@ -303,7 +314,7 @@ namespace MonitorAPI.Service
                 return parameter;
             }
 
-            using (PersistenceContext pc = new PersistenceContext(System.Transactions.IsolationLevel.ReadCommitted))
+            using (PersistenceContext pc = new PersistenceContext())
             {
                 OperationDao operationDao = new OperationDao(pc);
                 RebootPC proc = new RebootPC(parameter.ip, parameter.port);
@@ -326,7 +337,7 @@ namespace MonitorAPI.Service
                 return parameter;
             }
 
-            using (PersistenceContext pc = new PersistenceContext(System.Transactions.IsolationLevel.ReadCommitted))
+            using (PersistenceContext pc = new PersistenceContext())
             {
                 OperationDao operationDao = new OperationDao(pc);
                 RebootPC proc = new RebootPC(parameter.ip, parameter.port);
@@ -340,27 +351,17 @@ namespace MonitorAPI.Service
             }
         }
 
-        //RebootIPC
-        public CommandParameter QuerySchedule(int classroomID, string sessionID = "")
+        //Check Schedule
+        public CommandParameter CheckSchedule(int classroomID, string sessionID = "")
         {
             CommandParameter parameter = GetPPCParameter(classroomID);
             if (!parameter.succ)
             {
                 return parameter;
             }
-
-            using (PersistenceContext pc = new PersistenceContext(System.Transactions.IsolationLevel.ReadCommitted))
-            {
-                OperationDao operationDao = new OperationDao(pc);
-                RebootPC proc = new RebootPC(parameter.ip, parameter.port);
-                ExecuteCommand(proc, parameter);
-
-                ClassroomDao classroomDao = new ClassroomDao(pc);
-                Classroom classroom = classroomDao.GetClassroomByID(classroomID);
-                LogDao logDao = new LogDao(pc);
-                logDao.InsertCommandLog(sessionID, "Reboot IPC", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
-                return parameter;
-            }
+            DataTable dt = FCompareSchedule.CompareClassSchedule(classroomID);
+            parameter.obj = JsonConvert.SerializeObject(dt);
+            return parameter;
         }
 
         //List local record
@@ -372,7 +373,7 @@ namespace MonitorAPI.Service
                 return parameter;
             }
 
-            using (PersistenceContext pc = new PersistenceContext(System.Transactions.IsolationLevel.ReadCommitted))
+            using (PersistenceContext pc = new PersistenceContext())
             {
                 OperationDao operationDao = new OperationDao(pc);
                 ListLocalData proc = new ListLocalData(parameter.ip, parameter.port);
@@ -395,6 +396,22 @@ namespace MonitorAPI.Service
 
             parameter.succ = GetIPPort(classroomID, ref ip, ref port, ref parameter.ip, ref parameter.port, ref parameter.error);
             return parameter;
+        }
+
+        private List<ClassRecordingWithSchedule> GetClassRecordingbyClassroomID(int nClassroomID)
+        {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                OperationDao operationDao = new OperationDao(pc);
+                List<ClassRecordingWithSchedule> list = operationDao.GetClassRecordingByClassroomID(nClassroomID);
+                return list;
+            }
+        }
+
+        public DataTable GetClassRecordingTablebyClassroomID(int nClassroomID)
+        {
+            List<ClassRecordingWithSchedule> list = GetClassRecordingbyClassroomID(nClassroomID);
+            return CreateDataTable<ClassRecordingWithSchedule>(list);
         }
     }
 }
