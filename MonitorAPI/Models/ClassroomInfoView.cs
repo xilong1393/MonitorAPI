@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace MonitorAPI.Model
+namespace MonitorAPI.Models
 {
-    public class ClassroomView
+    public class ClassroomInfoView
     {
         [Browsable(false)]
         public int ClassroomID { get; set; }
         public string ClassroomName { get; set; }
         public string EngineStatus { get; set; }
-        //public string PPCPublicIP { get; set; }
+        [DisplayName("PPCIP")]
+        public string PPCPublicIP { get; set; }
+        [DisplayName("IPCIP")]
+        public string IPCPublicIP { get; set; }
 
         public string AgentStatus { get; set; }
-        [DisplayName("PPC")]
         public string PPCConnectionStatus { get; set; }
         //course
         public string AVStatus { get; set; }

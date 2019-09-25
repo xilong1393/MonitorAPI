@@ -19,7 +19,7 @@ namespace MonitorAPI.Dao
             "b.AVStatus, b.FreeDisk FROM CLASSROOM a " +
             "left join ClassroomEngineStatus b on a.ClassroomID=b.ClassroomID " +
             "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
-            "WHERE CLASSROOMGROUPID=@GROUPID";
+            "WHERE CLASSROOMGROUPID=@GROUPID ORDER BY CLASSROOMNAME";
 
         private const string SQL_GETCLASSROOMSchedule_CLASSROOMGROUPID = "SELECT CLASSROOMID, CLASSROOMNAME, PSCLASSROOMNAME, CLASSROOM.CLASSROOMGROUPID, PPCPUBLICIP, IPCPUBLICIP, "+
             "SVRPORTALPAGEID, PPCPRIVATEIP, IPCPRIVATEIP, PPCPORT, IPCPORT, WBNUMBER,CLASSROOM.STATUS FROM CLASSROOM,ClassroomGroup "+
@@ -27,6 +27,12 @@ namespace MonitorAPI.Dao
             "and CLASSROOM.CLASSROOMGROUPID = @GROUPID ORDER BY CLASSROOM.CLASSROOMGROUPID,CLASSROOMNAME";
 
         private const string QUERY_CLASSROOMDetailBYID_SQL = "SELECT a.ClassroomID, a.ClassroomName, b.EngineStatus, c.AgentStatus, a.WBNUMBER, a.Status, b.PPCConnectionStatus, " +
+          "b.AVStatus, b.FreeDisk FROM CLASSROOM a " +
+          "left join ClassroomEngineStatus b on a.ClassroomID=b.ClassroomID " +
+          "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
+          "WHERE a.CLASSROOMID=@CLASSROOMID";
+
+        private const string QUERY_CLASSROOMINFODetailBYID_SQL = "SELECT a.ClassroomID, a.ClassroomName, a.PPCPublicIP, a.IPCPublicIP, b.EngineStatus, c.AgentStatus, a.WBNUMBER, a.Status, b.PPCConnectionStatus, " +
           "b.AVStatus, b.FreeDisk FROM CLASSROOM a " +
           "left join ClassroomEngineStatus b on a.ClassroomID=b.ClassroomID " +
           "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
@@ -79,14 +85,14 @@ namespace MonitorAPI.Dao
             }
         }
 
-        public ClassroomView GetClassroomDetailByID(int ClassroomID)
+        public ClassroomInfoView GetClassroomDetailByID(int ClassroomID)
         {
             using (SqlCommand command = new SqlCommand())
             {
                 command.Connection = Connection;
-                command.CommandText = QUERY_CLASSROOMDetailBYID_SQL;
+                command.CommandText = QUERY_CLASSROOMINFODetailBYID_SQL;
                 command.Parameters.AddWithValue("@CLASSROOMID", ClassroomID);
-                ClassroomView classroomView = SqlHelper.ExecuteReaderCmdObject<ClassroomView>(command);
+                ClassroomInfoView classroomView = SqlHelper.ExecuteReaderCmdObject<ClassroomInfoView>(command);
                 return classroomView;
             }
         }

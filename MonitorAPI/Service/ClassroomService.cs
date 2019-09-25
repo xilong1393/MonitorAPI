@@ -65,12 +65,12 @@ namespace MonitorAPI.Service
             }
         }
 
-        public ClassroomView GetClassroomDetailByGroupID(string sessionID, int classroomID)
+        public ClassroomInfoView GetClassroomDetailByGroupID(string sessionID, int classroomID)
         {
             using (PersistenceContext pc = new PersistenceContext())
             {
                 ClassroomDao classroomDao = new ClassroomDao(pc);
-                ClassroomView classroomView = classroomDao.GetClassroomDetailByID(classroomID);
+                ClassroomInfoView classroomView = classroomDao.GetClassroomDetailByID(classroomID);
                 return classroomView;
             }
         }

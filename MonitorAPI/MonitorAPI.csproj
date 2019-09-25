@@ -184,6 +184,7 @@
     <Compile Include="Models\ClassroomEngineStatus.cs" />
     <Compile Include="Models\ClassroomGroup.cs" />
     <Compile Include="Models\ClassroomInfo.cs" />
+    <Compile Include="Models\ClassroomInfoView.cs" />
     <Compile Include="Models\ClassroomView.cs" />
     <Compile Include="Models\OperationModel\Classrecording.cs" />
     <Compile Include="Models\OperationModel\ClassRecordingWithSchedule.cs" />

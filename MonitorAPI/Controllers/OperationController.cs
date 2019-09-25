@@ -130,7 +130,7 @@ namespace MonitorAPI.Controllers
             try
             {
                 ClassroomService service = ServiceFactory.ClassroomService;
-                ClassroomView classroom = service.GetClassroomDetailByGroupID(sessionID, classroomID);
+                ClassroomInfoView classroom = service.GetClassroomDetailByGroupID(sessionID, classroomID);
                 if (classroom != null)
                     return Ok(classroom);
                 else
