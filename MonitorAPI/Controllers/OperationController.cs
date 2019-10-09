@@ -1,10 +1,12 @@
 ﻿using MonitorAPI.Model;
 using MonitorAPI.Models;
 using MonitorAPI.Models.OperationModel;
+using MonitorAPI.Models.ParameterForm;
 using MonitorAPI.Service;
 using MonitorAPI.Service.Operations;
 using MonitorAPI.Util;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -226,5 +228,74 @@ namespace MonitorAPI.Controllers
                 return BadRequest("something is wrong");
             }
         }
+
+        //upload local record
+        [HttpPost]
+        public IHttpActionResult UploadLocalData(UploadLocalDataForm form)
+        {
+            try
+            {
+                OperationService service = ServiceFactory.OperationService;
+                CommandParameter parameter = service.UploadLocalCourse(form.ClassroomID, form.Dirnames, form.SessionID);
+                if (parameter.succ)
+                    return Ok(parameter);
+                else
+                {
+                    LogHelper.GetLogger().Error(parameter.error);
+                    return BadRequest(parameter.error);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
+        //delete local record
+        [HttpPost]
+        public IHttpActionResult DeleteLocalData(UploadLocalDataForm form)
+        {
+            try
+            {
+                OperationService service = ServiceFactory.OperationService;
+                CommandParameter parameter = service.DeleteLocalCourse(form.ClassroomID, form.Dirnames, form.SessionID);
+                if (parameter.succ)
+                    return Ok(parameter);
+                else
+                {
+                    LogHelper.GetLogger().Error(parameter.error);
+                    return BadRequest(parameter.error);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
+        //start test course
+        [HttpPost]
+        public IHttpActionResult StartTestCourse(UploadLocalDataForm form)
+        {
+            try
+            {
+                TestCourseService service = ServiceFactory.TestCourseService;
+                ClassroomService classroomService = ServiceFactory.ClassroomService;
+                Classroom classroom = classroomService.GetClassroomByID(form.ClassroomID);
+
+                List<Quater> qlist = service.GetAllQuarter();
+                List<FileServer> flist = service.GetAllFileServer();
+                List<ClassType> clist = service.GetAllClassType();
+                return Ok(new TestCourseReturnModel(qlist, flist, clist, classroom));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
     }
 }

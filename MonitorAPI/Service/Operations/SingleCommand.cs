@@ -84,5 +84,27 @@ namespace MonitorAPI.Service.Operations
                 return false;
             }
         }
+
+        //upload local course: moved to operationService
+        static public CommandParameter UploadLocalCourses(int classroomid, ArrayList dirnames,string sessionID="")
+        {
+            CommandParameter parameter = GetPPCParameter(classroomid);
+            if (!parameter.succ)
+            {
+                return parameter;
+            }
+            
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                UploadLocalCourses proc = new UploadLocalCourses(parameter.ip, parameter.port, dirnames);
+                ExecuteCommand(proc, parameter);
+
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                Classroom classroom = classroomDao.GetClassroomByID(classroomid);
+                LogDao logDao = new LogDao(pc);
+                logDao.InsertCommandLog(sessionID, "upload local record", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
+                return parameter;
+            }
+        }
     }
 }

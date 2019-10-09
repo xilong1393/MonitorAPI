@@ -19,7 +19,7 @@ namespace MonitorAPI.Dao
             "b.AVStatus, b.FreeDisk FROM CLASSROOM a " +
             "left join ClassroomEngineStatus b on a.ClassroomID=b.ClassroomID " +
             "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
-            "WHERE CLASSROOMGROUPID=@GROUPID ORDER BY CLASSROOMNAME";
+            "WHERE CLASSROOMGROUPID=@GROUPID and classroomName like '%lauch' ORDER BY CLASSROOMNAME";
 
         private const string SQL_GETCLASSROOMSchedule_CLASSROOMGROUPID = "SELECT CLASSROOMID, CLASSROOMNAME, PSCLASSROOMNAME, CLASSROOM.CLASSROOMGROUPID, PPCPUBLICIP, IPCPUBLICIP, "+
             "SVRPORTALPAGEID, PPCPRIVATEIP, IPCPRIVATEIP, PPCPORT, IPCPORT, WBNUMBER,CLASSROOM.STATUS FROM CLASSROOM,ClassroomGroup "+

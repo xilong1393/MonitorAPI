@@ -13,6 +13,7 @@ namespace MonitorAPI.Service
         private static ClassroomService classroomService;
         private static ClassroomGroupService classroomGroupService;
         private static OperationService operationService;
+        private static TestCourseService testCourseService;
         public static UserService UserService
         {
             get
@@ -100,6 +101,24 @@ namespace MonitorAPI.Service
                     }
                 }
                 return operationService;
+            }
+        }
+
+        public static TestCourseService TestCourseService
+        {
+            get
+            {
+                if (testCourseService == null)
+                {
+                    lock (padlock)
+                    {
+                        if (testCourseService == null)
+                        {
+                            testCourseService = new TestCourseService();
+                        }
+                    }
+                }
+                return testCourseService;
             }
         }
     }

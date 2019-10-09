@@ -175,6 +175,7 @@
     <Compile Include="Dao\LogDao.cs" />
     <Compile Include="Dao\OperationDao.cs" />
     <Compile Include="Dao\RACommandLog.cs" />
+    <Compile Include="Dao\TestCourseDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,8 +190,13 @@
     <Compile Include="Models\OperationModel\Classrecording.cs" />
     <Compile Include="Models\OperationModel\ClassRecordingWithSchedule.cs" />
     <Compile Include="Models\OperationModel\ClassroomScheduleView.cs" />
+    <Compile Include="Models\OperationModel\ClassType.cs" />
     <Compile Include="Models\OperationModel\DatePeriod.cs" />
+    <Compile Include="Models\OperationModel\FileServer.cs" />
+    <Compile Include="Models\OperationModel\Quater.cs" />
+    <Compile Include="Models\OperationModel\TestCourseReturnModel.cs" />
     <Compile Include="Models\ParameterForm\GetClassroomListForm.cs" />
+    <Compile Include="Models\ParameterForm\UploadLocalDataForm.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ParameterForm\UserLoginForm.cs" />
     <Compile Include="Models\UserLoginLog.cs" />
@@ -208,6 +214,7 @@
     <Compile Include="Service\Operations\SingleCommand.cs" />
     <Compile Include="Service\Operations\XMLCommandFactory.cs" />
     <Compile Include="Service\ServiceFactory.cs" />
+    <Compile Include="Service\TestCourseService.cs" />
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Util\LogHelper.cs" />
   </ItemGroup>

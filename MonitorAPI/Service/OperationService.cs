@@ -6,6 +6,7 @@ using MonitorAPI.Service.FUNC;
 using MonitorAPI.Service.Operations;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 
@@ -375,7 +376,6 @@ namespace MonitorAPI.Service
 
             using (PersistenceContext pc = new PersistenceContext())
             {
-                OperationDao operationDao = new OperationDao(pc);
                 ListLocalData proc = new ListLocalData(parameter.ip, parameter.port);
                 ExecuteCommand(proc, parameter);
 
@@ -383,6 +383,49 @@ namespace MonitorAPI.Service
                 Classroom classroom = classroomDao.GetClassroomByID(classroomID);
                 LogDao logDao = new LogDao(pc);
                 logDao.InsertCommandLog(sessionID, "list local record", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
+                return parameter;
+            }
+        }
+
+        //upload local course
+        public CommandParameter UploadLocalCourse(int classroomID, ArrayList dirnames, string sessionID = "")
+        {
+            CommandParameter parameter = GetPPCParameter(classroomID);
+            if (!parameter.succ)
+            {
+                return parameter;
+            }
+
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                UploadLocalCourses proc = new UploadLocalCourses(parameter.ip, parameter.port, dirnames);
+                ExecuteCommand(proc, parameter);
+
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                Classroom classroom = classroomDao.GetClassroomByID(classroomID);
+                LogDao logDao = new LogDao(pc);
+                logDao.InsertCommandLog(sessionID, "upload local record", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
+                return parameter;
+            }
+        }
+        //upload local course
+        public CommandParameter DeleteLocalCourse(int classroomID, ArrayList dirnames, string sessionID = "")
+        {
+            CommandParameter parameter = GetPPCParameter(classroomID);
+            if (!parameter.succ)
+            {
+                return parameter;
+            }
+
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                DeleteLocalCourses proc = new DeleteLocalCourses(parameter.ip, parameter.port, dirnames);
+                ExecuteCommand(proc, parameter);
+
+                ClassroomDao classroomDao = new ClassroomDao(pc);
+                Classroom classroom = classroomDao.GetClassroomByID(classroomID);
+                LogDao logDao = new LogDao(pc);
+                logDao.InsertCommandLog(sessionID, "delete local record", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
                 return parameter;
             }
         }

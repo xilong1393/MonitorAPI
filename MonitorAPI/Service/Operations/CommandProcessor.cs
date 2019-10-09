@@ -205,6 +205,33 @@ namespace MonitorAPI.Service.Operations
             return CourseSchedule;
         }
     }
+    public class UploadLocalCourses : SingleCommandProcessor {
+        private string xml;
+        public UploadLocalCourses(string ip, int port, ArrayList dirnames)
+            : base(ip, port)
+        {
+            xml = XMLCommandFactory.UploadLocalCoursesXml(dirnames);
+        }
+        public override Object Execute()
+        {
+            SendCommandAndParseResponse(xml);
+            return null;
+        }
+    }
+    public class DeleteLocalCourses : SingleCommandProcessor
+    {
+        private string xml;
+        public DeleteLocalCourses(string ip, int port, ArrayList dirnames)
+            : base(ip, port)
+        {
+            xml = XMLCommandFactory.DeleteLocalCoursesXml(dirnames);
+        }
+        public override Object Execute()
+        {
+            SendCommandAndParseResponse(xml);
+            return null;
+        }
+    }
     public class UpdateEngineConfigurationParameter
     {
         public string IPCIP;

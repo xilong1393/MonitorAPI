@@ -613,5 +613,26 @@ namespace MonitorAPI.Service.Operations
 
             return doc.OuterXml.ToString();
         }
+
+        static public string UploadLocalCoursesXml(ArrayList dirnames)
+        {
+            return simple_command_xml(UPLOAD_LOCALDATA_COMMAND_STR, UPLOAD_LOCALDATA_COMMAND_ID, dirnames);
+        }
+
+        static private string simple_command_xml(string commandname, int commandid, ArrayList dirnames)
+        {
+            XmlDocument doc = simple_command_xml_base(commandname, commandid);
+            for (int i = 0; i < dirnames.Count; i++)
+            {
+                XmlNode nameNode = doc.CreateElement(DIRECTORY_STR);
+                nameNode.InnerText = (string)dirnames[i];
+                doc.DocumentElement.AppendChild(nameNode);
+            }
+            return doc.OuterXml;
+        }
+        static public string DeleteLocalCoursesXml(ArrayList dirnames)
+        {
+            return simple_command_xml(DEL_LOCALDATA_COMMAND_STR, DEL_LOCALDATA_COMMAND_ID, dirnames);
+        }
     }
 }

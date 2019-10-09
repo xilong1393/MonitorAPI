@@ -20,10 +20,10 @@ namespace MonitorAPI.Service.FUNC
             xtb.Columns.Add("ClassroomID", typeof(Int32));
             xtb.Columns.Add("Server", typeof(String));
             xtb.Columns.Add("Local", typeof(String));
-            //DataColumn[] keys = new DataColumn[2];
-            //keys[0] = xtb.Columns["ClassID"];
-            //keys[1] = xtb.Columns["ClassStartTime"];
-            //xtb.PrimaryKey = keys;
+            DataColumn[] keys = new DataColumn[2];
+            keys[0] = xtb.Columns["ClassID"];
+            keys[1] = xtb.Columns["ClassStartTime"];
+            xtb.PrimaryKey = keys;
 
             DatePeriod datePeriod = ServiceFactory.OperationService.GetDatePeriod(0);
 
@@ -31,7 +31,7 @@ namespace MonitorAPI.Service.FUNC
             DateTime dtNow = datePeriod.StartDate;
             foreach (DataRow row in server.Rows)
             {
-                //if (dtNow < Convert.ToDateTime(row["ClassStartTime"]))
+                if (dtNow < Convert.ToDateTime(row["ClassStartTime"]))
                 if (true)
                 {
                     DataRow newrow = xtb.NewRow();
@@ -45,30 +45,30 @@ namespace MonitorAPI.Service.FUNC
                     xtb.Rows.Add(newrow);
                 }
             }
-            //foreach (DataRow row in local.Rows)
-            //{
-            //    object[] s = { Convert.ToString(row["ClassID"]), Convert.ToDateTime(row["ClassStartTime"]) };
-            //    DataRow xrow = xtb.Rows.Find(s);
-            //    if (xrow == null)
-            //    {
-            //        if (dtNow < Convert.ToDateTime(row["ClassStartTime"]))
-            //        {
-            //            DataRow newrow = xtb.NewRow();
-            //            newrow["ClassID"] = row["ClassID"];
-            //            newrow["ClassName"] = row["ClassName"];
-            //            newrow["ClassStartTime"] = row["ClassStartTime"];
-            //            newrow["ClassLength"] = row["ClassLength"];
-            //            newrow["ClassroomID"] = nClassroomID;
-            //            newrow["Server"] = "no";
-            //            newrow["Local"] = "yes";
-            //            xtb.Rows.Add(newrow);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        xrow["Local"] = "yes";
-            //    }
-            //}
+            foreach (DataRow row in local.Rows)
+            {
+                object[] s = { Convert.ToString(row["ClassID"]), Convert.ToDateTime(row["ClassStartTime"]) };
+                DataRow xrow = xtb.Rows.Find(s);
+                if (xrow == null)
+                {
+                    if (dtNow < Convert.ToDateTime(row["ClassStartTime"]))
+                    {
+                        DataRow newrow = xtb.NewRow();
+                        newrow["ClassID"] = row["ClassID"];
+                        newrow["ClassName"] = row["ClassName"];
+                        newrow["ClassStartTime"] = row["ClassStartTime"];
+                        newrow["ClassLength"] = row["ClassLength"];
+                        newrow["ClassroomID"] = nClassroomID;
+                        newrow["Server"] = "no";
+                        newrow["Local"] = "yes";
+                        xtb.Rows.Add(newrow);
+                    }
+                }
+                else
+                {
+                    xrow["Local"] = "yes";
+                }
+            }
             return xtb;
         }
     }
