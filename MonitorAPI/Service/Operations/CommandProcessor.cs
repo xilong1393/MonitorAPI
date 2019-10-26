@@ -2,6 +2,8 @@
 using System;
 using System.Collections;
 using System.Data;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -52,7 +54,7 @@ namespace MonitorAPI.Service.Operations
 
             try
             {
-                if (!udpClient.Poll(5000000, SelectMode.SelectRead))
+                if (!udpClient.Poll(5000000*10, SelectMode.SelectRead))
                 {
                     throw new Exception("in 5 second no response");
                 }
@@ -67,6 +69,31 @@ namespace MonitorAPI.Service.Operations
                 //throw new Exception("failed in waiting for response");
                 throw;
             }
+        }
+        public void byteArrayToImage(byte[] byteArray)
+        {
+            //MemoryStream ms = new MemoryStream(byteArrayIn, 0, byteArrayIn.Length);
+            //ms.Position = 0; // this is important
+            //return Image.FromStream(ms, true);
+            try
+            {
+                MemoryStream ms = new MemoryStream(byteArray);
+                ms.Seek(0, SeekOrigin.Begin);
+                string ImagePath = @"E:test.jpg";
+                Bitmap bmp = new Bitmap(ms);
+                bmp.Save(ImagePath, ImageFormat.Bmp);
+                //ms.Close();
+            }
+            catch (Exception)
+            {
+                //return null;
+            }
+
+        }
+        protected byte[] getImageBinary(string commandxml) {
+            byte[] returndata = SendBinaryReturnCommand(commandxml);
+            byteArrayToImage(returndata);
+            return returndata;
         }
         protected string SendStringReturnCommand(string commandxml)
         {
@@ -148,6 +175,23 @@ namespace MonitorAPI.Service.Operations
         {
             SendCommandAndParseResponse(xml);
             return null;
+        }
+    }
+
+    public class GetImageString : SingleCommandProcessor
+    {
+        string xml;
+        public GetImageString(string ip, int port, string screenshrinkdeptList, string screenshrinktoSizeInM, UpdateEngineConfigurationParameter parameter)
+            : base(ip, port)
+        {
+            xml = XMLCommandFactory.GetImageString(parameter.IPCIP, parameter.SvrPortalpage, parameter.FTPUser, parameter.FTPPassword, parameter.classroomid, screenshrinkdeptList, screenshrinktoSizeInM);
+        }
+        public override Object Execute()
+        {
+            //SendCommandAndParseResponse(xml);
+            //return SendStringReturnCommand(xml);
+            return getImageBinary(xml);
+            //return xml;
         }
     }
 

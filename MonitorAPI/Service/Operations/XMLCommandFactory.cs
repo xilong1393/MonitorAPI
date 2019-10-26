@@ -208,7 +208,10 @@ namespace MonitorAPI.Service.Operations
         {
             return updateengineconfiguration_command_xml(UPDATEENGINECONFIGURATION_COMMAND_STR, UPDATEENGINECONFIGURATION_COMMAND_ID, IPCIP, SvrPortalpage, FTPUser, FTPPassword, classroomid, screenshrinkdeptList, screenshrinktoSizeInM);
         }
-
+        static public string GetImageString(string IPCIP, string SvrPortalpage, string FTPUser, string FTPPassword, int classroomid, String screenshrinkdeptList, string screenshrinktoSizeInM)
+        {
+            return updateengineconfiguration_command_xml(QUERY_IMAGE_TYPE_STR, QUERY_IMAGE_TYPE_ID, IPCIP, SvrPortalpage, FTPUser, FTPPassword, classroomid, screenshrinkdeptList, screenshrinktoSizeInM);
+        }
         static public string UpdateAgentConfigurationCommandXml(string PPCIP, string SvrPortalpage, int classroomid)
         {
             return updateagentconfiguration_command_xml(UPDATEAGENTCONFIGURATION_COMMAND_STR, UPDATEAGENTCONFIGURATION_COMMAND_ID, PPCIP, SvrPortalpage, classroomid);

@@ -190,6 +190,7 @@
     <Compile Include="Models\OperationModel\Classrecording.cs" />
     <Compile Include="Models\OperationModel\ClassRecordingWithSchedule.cs" />
     <Compile Include="Models\OperationModel\ClassroomScheduleView.cs" />
+    <Compile Include="Models\OperationModel\ClassSchedule.cs" />
     <Compile Include="Models\OperationModel\ClassType.cs" />
     <Compile Include="Models\OperationModel\DatePeriod.cs" />
     <Compile Include="Models\OperationModel\FileServer.cs" />

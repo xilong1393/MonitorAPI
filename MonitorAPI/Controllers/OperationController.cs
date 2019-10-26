@@ -79,7 +79,7 @@ namespace MonitorAPI.Controllers
             }
         }
 
-        //list local record
+        //puch config
         [HttpGet]
         public IHttpActionResult PushPPCConfig(int classroomID, string sessionID)
         {
@@ -89,6 +89,29 @@ namespace MonitorAPI.Controllers
                 CommandParameter parameter = service.UpdatePPCConfig(classroomID, sessionID);
                 if (parameter.succ)
                     return Ok(parameter);
+                else
+                {
+                    LogHelper.GetLogger().Error(parameter.error);
+                    return BadRequest(parameter.error);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
+        //puch config
+        [HttpGet]
+        public IHttpActionResult GetImageString(int classroomID, string sessionID)
+        {
+            try
+            {
+                OperationService service = ServiceFactory.OperationService;
+                CommandParameter parameter = service.GetImageString(classroomID, sessionID);
+                if (parameter.succ)
+                    return Ok(parameter.obj);
                 else
                 {
                     LogHelper.GetLogger().Error(parameter.error);
@@ -289,6 +312,29 @@ namespace MonitorAPI.Controllers
                 List<FileServer> flist = service.GetAllFileServer();
                 List<ClassType> clist = service.GetAllClassType();
                 return Ok(new TestCourseReturnModel(qlist, flist, clist, classroom));
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
+        //submit start test course
+        [HttpPost]
+        public IHttpActionResult SubmitStartTestCourse(ClassSchedule classSchedule)
+        {
+            try
+            {
+                OperationService service = ServiceFactory.OperationService;
+                bool res = service.InsertClassSchedule(classSchedule);
+                //if (!res)
+                //    return BadRequest("Insert class schedule failed");
+                CommandParameter parameter = service.PushSchedule(classSchedule.ClassroomID);
+                if (parameter.succ)
+                    return Ok(parameter);
+                else
+                    return BadRequest(parameter.error);
             }
             catch (Exception ex)
             {

@@ -273,6 +273,47 @@ namespace MonitorAPI.Service
             }
         }
 
+        public CommandParameter GetImageString(int classroomID, string sessionID = "")
+        {
+            UpdateEngineConfigurationParameter engineConfig = new UpdateEngineConfigurationParameter();
+            UpdateAgentConfigurationParamerer agentConfig = new UpdateAgentConfigurationParamerer();
+            CommandParameter parameter = new CommandParameter();
+
+            if (!GetUpdateParameter(classroomID, ref engineConfig, ref agentConfig))
+            {
+                parameter.succ = false;
+                parameter.error = "get engine or agent param";
+                return parameter;
+            }
+
+            // update Engine
+            CommandParameter engineParam = GetPPCParameter(classroomID);
+            if (!engineParam.succ)
+            {
+                return engineParam;
+            }
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                OperationDao operationDao = new OperationDao(pc);
+                int result = operationDao.UpdateClassRecording(classroomID, 'D');
+
+                GetImageString getImageString = new GetImageString(engineParam.ip, engineParam.port,
+                                                    FWebConfig.ScreenShrinkDeptList, FWebConfig.ScreenShrinkToSizeInM, engineConfig);
+                ExecuteCommand(getImageString, engineParam);
+
+                if (engineParam.succ)
+                {
+                    return engineParam;
+                }
+                else
+                {
+                    parameter.succ = false;
+                    parameter.error = "get binary image string failed";
+                    return parameter;
+                }
+            }
+        }
+
         private bool GetUpdateParameter(int classroomID, ref UpdateEngineConfigurationParameter enginepar, ref UpdateAgentConfigurationParamerer agentpar)
         {
             try
@@ -455,6 +496,14 @@ namespace MonitorAPI.Service
         {
             List<ClassRecordingWithSchedule> list = GetClassRecordingbyClassroomID(nClassroomID);
             return CreateDataTable<ClassRecordingWithSchedule>(list);
+        }
+        public bool InsertClassSchedule(ClassSchedule newSchedule) {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                OperationDao operationDao = new OperationDao(pc);
+                int res = operationDao.InsertClassSchedule(newSchedule);
+                return res >= 1;
+            }
         }
     }
 }
