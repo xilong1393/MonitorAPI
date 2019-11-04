@@ -314,6 +314,47 @@ namespace MonitorAPI.Service
             }
         }
 
+        public CommandParameter GetAudioData(int classroomID, string sessionID = "")
+        {
+            UpdateEngineConfigurationParameter engineConfig = new UpdateEngineConfigurationParameter();
+            UpdateAgentConfigurationParamerer agentConfig = new UpdateAgentConfigurationParamerer();
+            CommandParameter parameter = new CommandParameter();
+
+            if (!GetUpdateParameter(classroomID, ref engineConfig, ref agentConfig))
+            {
+                parameter.succ = false;
+                parameter.error = "get engine or agent param";
+                return parameter;
+            }
+
+            // update Engine
+            CommandParameter engineParam = GetPPCParameter(classroomID);
+            if (!engineParam.succ)
+            {
+                return engineParam;
+            }
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                OperationDao operationDao = new OperationDao(pc);
+                int result = operationDao.UpdateClassRecording(classroomID, 'D');
+
+                GetAudioData getImageString = new GetAudioData(engineParam.ip, engineParam.port,
+                                                    FWebConfig.ScreenShrinkDeptList, FWebConfig.ScreenShrinkToSizeInM, engineConfig);
+                ExecuteCommand(getImageString, engineParam);
+
+                if (engineParam.succ)
+                {
+                    return engineParam;
+                }
+                else
+                {
+                    parameter.succ = false;
+                    parameter.error = "get binary audio data failed";
+                    return parameter;
+                }
+            }
+        }
+
         private bool GetUpdateParameter(int classroomID, ref UpdateEngineConfigurationParameter enginepar, ref UpdateAgentConfigurationParamerer agentpar)
         {
             try

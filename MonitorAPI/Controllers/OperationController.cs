@@ -111,7 +111,29 @@ namespace MonitorAPI.Controllers
                 OperationService service = ServiceFactory.OperationService;
                 CommandParameter parameter = service.GetImageString(classroomID, sessionID);
                 if (parameter.succ)
-                    return Ok(parameter.obj);
+                    return Ok(parameter);
+                else
+                {
+                    LogHelper.GetLogger().Error(parameter.error);
+                    return BadRequest(parameter.error);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAudioData(int classroomID, string sessionID)
+        {
+            try
+            {
+                OperationService service = ServiceFactory.OperationService;
+                CommandParameter parameter = service.GetAudioData(classroomID, sessionID);
+                if (parameter.succ)
+                    return Ok(parameter);
                 else
                 {
                     LogHelper.GetLogger().Error(parameter.error);

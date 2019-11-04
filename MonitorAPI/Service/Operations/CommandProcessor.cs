@@ -82,17 +82,16 @@ namespace MonitorAPI.Service.Operations
                 string ImagePath = @"E:test.jpg";
                 Bitmap bmp = new Bitmap(ms);
                 bmp.Save(ImagePath, ImageFormat.Bmp);
-                //ms.Close();
+                ms.Close();
             }
             catch (Exception)
             {
                 //return null;
             }
-
         }
         protected byte[] getImageBinary(string commandxml) {
             byte[] returndata = SendBinaryReturnCommand(commandxml);
-            byteArrayToImage(returndata);
+            //byteArrayToImage(returndata);
             return returndata;
         }
         protected string SendStringReturnCommand(string commandxml)
@@ -185,6 +184,23 @@ namespace MonitorAPI.Service.Operations
             : base(ip, port)
         {
             xml = XMLCommandFactory.GetImageString(parameter.IPCIP, parameter.SvrPortalpage, parameter.FTPUser, parameter.FTPPassword, parameter.classroomid, screenshrinkdeptList, screenshrinktoSizeInM);
+        }
+        public override Object Execute()
+        {
+            //SendCommandAndParseResponse(xml);
+            //return SendStringReturnCommand(xml);
+            return getImageBinary(xml);
+            //return xml;
+        }
+    }
+
+    public class GetAudioData : SingleCommandProcessor
+    {
+        string xml;
+        public GetAudioData(string ip, int port, string screenshrinkdeptList, string screenshrinktoSizeInM, UpdateEngineConfigurationParameter parameter)
+            : base(ip, port)
+        {
+            xml = XMLCommandFactory.GetAudioData(parameter.IPCIP, parameter.SvrPortalpage, parameter.FTPUser, parameter.FTPPassword, parameter.classroomid, screenshrinkdeptList, screenshrinktoSizeInM);
         }
         public override Object Execute()
         {
