@@ -338,9 +338,9 @@ namespace MonitorAPI.Service
                 OperationDao operationDao = new OperationDao(pc);
                 int result = operationDao.UpdateClassRecording(classroomID, 'D');
 
-                GetAudioData getImageString = new GetAudioData(engineParam.ip, engineParam.port,
+                GetAudioData getAudioData = new GetAudioData(engineParam.ip, engineParam.port,
                                                     FWebConfig.ScreenShrinkDeptList, FWebConfig.ScreenShrinkToSizeInM, engineConfig);
-                ExecuteCommand(getImageString, engineParam);
+                ExecuteCommand(getAudioData, engineParam);
 
                 if (engineParam.succ)
                 {

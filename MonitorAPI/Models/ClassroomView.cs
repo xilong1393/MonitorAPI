@@ -11,10 +11,10 @@ namespace MonitorAPI.Model
     {
         [Browsable(false)]
         public int ClassroomID { get; set; }
+        public string PPCPublicIP { get; set; }
+        public int PPCPort { get; set; }
         public string ClassroomName { get; set; }
         public string EngineStatus { get; set; }
-        //public string PPCPublicIP { get; set; }
-
         public string AgentStatus { get; set; }
         [DisplayName("PPC")]
         public string PPCConnectionStatus { get; set; }
