@@ -21,11 +21,14 @@ namespace MonitorAPI.Dao
             "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
             "WHERE CLASSROOMGROUPID=@GROUPID ORDER BY CLASSROOMNAME";
 
-        private const string SQL_GETCLASSROOMSchedule_CLASSROOMGROUPID = "SELECT CLASSROOMID, CLASSROOMNAME, PSCLASSROOMNAME, CLASSROOM.CLASSROOMGROUPID, PPCPUBLICIP, IPCPUBLICIP, "+
-            "SVRPORTALPAGEID, PPCPRIVATEIP, IPCPRIVATEIP, PPCPORT, IPCPORT, WBNUMBER,CLASSROOM.STATUS FROM CLASSROOM,ClassroomGroup "+
-            "WHERE ClassroomGroup.CLASSROOMGROUPID=CLASSROOM.CLASSROOMGROUPID "+
-            "and CLASSROOM.CLASSROOMGROUPID = @GROUPID ORDER BY CLASSROOM.CLASSROOMGROUPID,CLASSROOMNAME";
+        //private const string SQL_GETCLASSROOMSchedule_CLASSROOMGROUPID = "SELECT CLASSROOMID, CLASSROOMNAME, PSCLASSROOMNAME, CLASSROOM.CLASSROOMGROUPID, PPCPUBLICIP, IPCPUBLICIP, "+
+        //    "SVRPORTALPAGEID, PPCPRIVATEIP, IPCPRIVATEIP, PPCPORT, IPCPORT, WBNUMBER,CLASSROOM.STATUS FROM CLASSROOM,ClassroomGroup "+
+        //    "WHERE ClassroomGroup.CLASSROOMGROUPID=CLASSROOM.CLASSROOMGROUPID "+
+        //    "and CLASSROOM.CLASSROOMGROUPID = @GROUPID ORDER BY CLASSROOM.CLASSROOMGROUPID,CLASSROOMNAME";
 
+        private const string SQL_GETCLASSROOMSchedule_CLASSROOMGROUPID = "select c.ClassroomName, cs.ClassName, cs.InstructorName, cs.WeekDayID, cs.ClassStartTime, cs.ClassLength from ClassSchedule cs, Classroom c " +
+            "where cs.ClassroomID=c.ClassroomID and c.CLASSROOMGROUPID=@GROUPID and cs.ClassStartTime>DATEADD(DAY, -90-2-DATEPART(WEEKDAY, GETDATE()), DATEDIFF(dd, 0, GETDATE()))";
+            
         private const string QUERY_CLASSROOMDetailBYID_SQL = "SELECT a.ClassroomID, a.ClassroomName, b.EngineStatus, c.AgentStatus, a.WBNUMBER, a.Status, b.PPCConnectionStatus, " +
           "b.AVStatus, b.FreeDisk FROM CLASSROOM a " +
           "left join ClassroomEngineStatus b on a.ClassroomID=b.ClassroomID " +
