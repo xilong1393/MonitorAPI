@@ -9,16 +9,16 @@ namespace MonitorAPI.Service.Operations
 {
     public class SingleCommand
     {
-        public static DataTable GetDataTableStyleLocalSchedule(int activeclassroomid)
+        public static DataTable GetDataTableStyleLocalSchedule(int activeclassroomid, string sessionID)
         {
-            CommandParameter parameter = QuerySchedule(activeclassroomid);
+            CommandParameter parameter = QuerySchedule(activeclassroomid, sessionID);
             Hashtable hstCourseRecording = new Hashtable();
             hstCourseRecording = (Hashtable)parameter.obj;
             DataTable displayedDataTables = FConvertToDatatable.ConvertScheduleToDataTable(hstCourseRecording);
             return displayedDataTables;
         }
 
-        private static CommandParameter QuerySchedule(int activeclassroomid)
+        private static CommandParameter QuerySchedule(int activeclassroomid, string sessionID)
         {
             CommandParameter parameter = GetPPCParameter(activeclassroomid);
             if (!parameter.succ)
@@ -33,7 +33,7 @@ namespace MonitorAPI.Service.Operations
                 ClassroomDao classroomDao = new ClassroomDao(pc);
                 Classroom classroom = classroomDao.GetClassroomByID(activeclassroomid);
                 LogDao logDao = new LogDao(pc);
-                logDao.InsertCommandLog("random_winform", "check schedule", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
+                logDao.InsertCommandLog(sessionID, "check schedule", classroom.ClassroomName, parameter.ip, parameter.succ ? 'S' : 'F');
                 return parameter;
             }
         }

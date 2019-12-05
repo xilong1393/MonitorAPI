@@ -442,7 +442,7 @@ namespace MonitorAPI.Service
             {
                 return parameter;
             }
-            DataTable dt = FCompareSchedule.CompareClassSchedule(classroomID);
+            DataTable dt = FCompareSchedule.CompareClassSchedule(classroomID, sessionID);
             parameter.obj = JsonConvert.SerializeObject(dt);
             return parameter;
         }
@@ -536,7 +536,7 @@ namespace MonitorAPI.Service
         public DataTable GetClassRecordingTablebyClassroomID(int nClassroomID)
         {
             List<ClassRecordingWithSchedule> list = GetClassRecordingbyClassroomID(nClassroomID);
-            return CreateDataTable<ClassRecordingWithSchedule>(list);
+            return CreateDataTable(list);
         }
         public bool InsertClassSchedule(ClassSchedule newSchedule) {
             using (PersistenceContext pc = new PersistenceContext())

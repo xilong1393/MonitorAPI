@@ -7,11 +7,11 @@ namespace MonitorAPI.Service.FUNC
 {
     public class FCompareSchedule
     {
-        public static DataTable CompareClassSchedule(int nClassroomID) {
+        public static DataTable CompareClassSchedule(int nClassroomID, string sessionID) {
 
             DataTable server = ServiceFactory.OperationService.GetClassRecordingTablebyClassroomID(nClassroomID);
+            DataTable local = SingleCommand.GetDataTableStyleLocalSchedule(nClassroomID, sessionID);
 
-            DataTable local = SingleCommand.GetDataTableStyleLocalSchedule(nClassroomID);
             DataTable xtb = new DataTable("Results");
             xtb.Columns.Add("ClassID", typeof(String));
             xtb.Columns.Add("ClassName", typeof(String));
