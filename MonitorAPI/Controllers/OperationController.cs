@@ -365,5 +365,21 @@ namespace MonitorAPI.Controllers
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult GetClassroomStatusbyClassroomID(int classroomID, string sessionID)
+        {
+            try
+            {
+                OperationService service = ServiceFactory.OperationService;
+                ClassroomEngineAgentStatus res = service.GetClassroomStatusbyClassroomID(classroomID);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.GetLogger().Error(ex.ToString());
+                return BadRequest("something is wrong");
+            }
+        }
+
     }
 }

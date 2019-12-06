@@ -189,6 +189,7 @@
     <Compile Include="Models\ClassroomView.cs" />
     <Compile Include="Models\OperationModel\Classrecording.cs" />
     <Compile Include="Models\OperationModel\ClassRecordingWithSchedule.cs" />
+    <Compile Include="Models\OperationModel\ClassroomEngineAgentStatus.cs" />
     <Compile Include="Models\OperationModel\ClassroomScheduleView.cs" />
     <Compile Include="Models\OperationModel\ClassSchedule.cs" />
     <Compile Include="Models\OperationModel\ClassType.cs" />

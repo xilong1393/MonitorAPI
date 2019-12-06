@@ -538,12 +538,23 @@ namespace MonitorAPI.Service
             List<ClassRecordingWithSchedule> list = GetClassRecordingbyClassroomID(nClassroomID);
             return CreateDataTable(list);
         }
-        public bool InsertClassSchedule(ClassSchedule newSchedule) {
+        public bool InsertClassSchedule(ClassSchedule newSchedule)
+        {
             using (PersistenceContext pc = new PersistenceContext())
             {
                 OperationDao operationDao = new OperationDao(pc);
                 int res = operationDao.InsertClassSchedule(newSchedule);
                 return res >= 1;
+            }
+        }
+
+        public ClassroomEngineAgentStatus GetClassroomStatusbyClassroomID(int classroomID)
+        {
+            using (PersistenceContext pc = new PersistenceContext())
+            {
+                OperationDao operationDao = new OperationDao(pc);
+                ClassroomEngineAgentStatus res = operationDao.GetClassroomStatusbyClassroomID(classroomID);
+                return res;
             }
         }
     }
