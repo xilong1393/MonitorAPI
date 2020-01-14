@@ -89,9 +89,10 @@ namespace MonitorAPI.Service.Operations
                 //return null;
             }
         }
-        protected byte[] getImageBinary(string commandxml) {
+
+        //get the binary data for both the images and audios
+        protected byte[] getBinary(string commandxml) {
             byte[] returndata = SendBinaryReturnCommand(commandxml);
-            //byteArrayToImage(returndata);
             return returndata;
         }
         protected string SendStringReturnCommand(string commandxml)
@@ -187,10 +188,7 @@ namespace MonitorAPI.Service.Operations
         }
         public override Object Execute()
         {
-            //SendCommandAndParseResponse(xml);
-            //return SendStringReturnCommand(xml);
-            return getImageBinary(xml);
-            //return xml;
+            return getBinary(xml);
         }
     }
 
@@ -204,10 +202,7 @@ namespace MonitorAPI.Service.Operations
         }
         public override Object Execute()
         {
-            //SendCommandAndParseResponse(xml);
-            //return SendStringReturnCommand(xml);
-            return getImageBinary(xml);
-            //return xml;
+            return getBinary(xml);
         }
     }
 

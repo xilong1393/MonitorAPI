@@ -79,7 +79,7 @@ namespace MonitorAPI.Controllers
             }
         }
 
-        //puch config
+        //push config, connect ppc and ipc.
         [HttpGet]
         public IHttpActionResult PushPPCConfig(int classroomID, string sessionID)
         {
@@ -102,7 +102,7 @@ namespace MonitorAPI.Controllers
             }
         }
 
-        //puch config
+        //not used
         [HttpGet]
         public IHttpActionResult GetImageString(int classroomID, string sessionID)
         {
@@ -125,6 +125,8 @@ namespace MonitorAPI.Controllers
             }
         }
 
+
+        //not used
         [HttpGet]
         public IHttpActionResult GetAudioData(int classroomID, string sessionID)
         {
@@ -147,7 +149,7 @@ namespace MonitorAPI.Controllers
             }
         }
 
-        //check schedule
+        //check schedule of the selected classroom
         [HttpGet]
         public IHttpActionResult CheckSchedule(int classroomID, string sessionID)
         {
