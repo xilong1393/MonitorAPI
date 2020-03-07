@@ -94,10 +94,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/25/2012 12:48:56</publishTime>
     </File>
     <File Include="bin/MonitorAPI.dll">
-      <publishTime>01/09/2020 15:27:12</publishTime>
+      <publishTime>03/06/2020 11:33:34</publishTime>
     </File>
     <File Include="bin/MonitorAPI.pdb">
-      <publishTime>01/09/2020 15:27:12</publishTime>
+      <publishTime>03/06/2020 11:33:34</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>02/18/2018 09:44:54</publishTime>

@@ -21,6 +21,7 @@ namespace MonitorAPI.Model
         //course
         public string AVStatus { get; set; }
         public int WBNumber { get; set; }
+        public int KaptivoNumber { get; set; }
         public string Status { get; set; }
         //SD
         public int FreeDisk { get; set; }

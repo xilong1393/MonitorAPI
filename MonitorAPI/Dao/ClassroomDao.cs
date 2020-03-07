@@ -15,7 +15,7 @@ namespace MonitorAPI.Dao
         //private const string QUERY_CLASSROOMBYGROUPID_SQL = "SELECT * FROM CLASSROOM WHERE CLASSROOMGROUPID=@GROUPID";
         private const string QUERY_CLASSROOMBYID_SQL = "SELECT * FROM CLASSROOM WHERE ClassroomID=@ClassroomID";
 
-        private const string QUERY_CLASSROOMBYGROUPID_SQL = "SELECT a.ClassroomID, a.PPCPublicIP, a.PPCPort, a.ClassroomName, b.EngineStatus, c.AgentStatus, a.WBNUMBER, a.Status, b.PPCConnectionStatus, " +
+        private const string QUERY_CLASSROOMBYGROUPID_SQL = "SELECT a.ClassroomID, a.PPCPublicIP, a.PPCPort, a.ClassroomName, b.EngineStatus, c.AgentStatus, a.WBNUMBER, a.KaptivoNumber, a.Status, b.PPCConnectionStatus, " +
             "b.AVStatus, b.FreeDisk FROM CLASSROOM a " +
             "left join ClassroomEngineStatus b on a.ClassroomID=b.ClassroomID " +
             "left join CLassroomAgentStatus c on b.ClassroomID=c.ClassroomID " +
